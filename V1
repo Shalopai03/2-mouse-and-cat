@@ -1,0 +1,66 @@
+main1.java
+__________________________________________________________________________________________
+public class main1 {
+
+    public static void main(String[] args)
+    {
+        animal a1 = new animal();
+        a1.name="cat";
+
+        animal a2 = new animal();
+        a2.name="mouse 1";
+        animal a3 = new animal();
+        a3.name="mouse 2";
+        a1.addMyListener(a2);
+        a1.addMyListener(a3);
+        a1.addMyListener(a1);
+
+
+
+        a1.fireMyEvent("may");
+
+    }
+}
+___________________________________________________________________________________________
+MyListener.java
+___________________________________________________________________________________________
+import java.awt.Event;
+
+
+public interface MyListener {
+
+    void myHappend(Event ev);
+
+}
+___________________________________________________________________________________________
+animal.java
+___________________________________________________________________________________________
+import java.awt.Event;
+import java.util.ArrayList;
+
+
+public class animal implements MyListener {
+    String name;
+    private static ArrayList<MyListener> listeners = new ArrayList<MyListener>();
+    public static void addMyListener(MyListener listener)
+    {
+        listeners.add(listener);
+    }
+
+    protected void fireMyEvent(String message)
+    {
+        Event ev = new Event(this, 0, message);
+        for(MyListener listener : listeners)
+            listener.myHappend(ev);
+    }
+
+    public void myHappend(Event ev) {
+        if(name!="cat")
+            System.out.println("ойойойо "+name);
+        else
+//if(name.equals("cat"));
+            System.out.println("мне все равно "+name);
+
+    }
+
+}
